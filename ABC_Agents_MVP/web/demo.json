@@ -1,0 +1,22 @@
+{
+  "project_name": "AI Security Alarm Verification Service",
+  "category": "feasibility",
+  "objective": "Reduce control-room alarm verification workload by 30% without increasing missed critical incidents.",
+  "solution": "Integrate AI-assisted alarm verification with the existing VMS and control-room workflow. Keep human control of critical alarm handling.",
+  "decision_question": "Is this a viable paid pilot candidate, and which acceptance tests and evidence are needed before approaching a customer?",
+  "success_criteria": [
+    "Observe at least a 30% reduction in operator verification minutes against a matched baseline.",
+    "Demonstrate no increase in missed critical incidents against the same baseline, with a pre-agreed sample and measurement protocol.",
+    "Validate integration, operator handover and cost against written pilot acceptance conditions."
+  ],
+  "constraints": [
+    "Treat 30% as a project target, not a measured result.",
+    "Preserve critical escalation and customer-authorised data handling."
+  ],
+  "evidence": [
+    {"source": "Demo project brief", "claim": "The 30% workload reduction is a proposed target. No measured outcome is available.", "status": "assumption", "criterion": 1},
+    {"source": "Demo evidence inventory", "claim": "A labelled alarm sample, missed-incident baseline, VMS validation and commercial commitments have not been supplied.", "status": "missing", "criterion": 2}
+  ],
+  "cross_examine": true,
+  "language": "en"
+}

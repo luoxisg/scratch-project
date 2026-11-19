@@ -1,0 +1,19 @@
+services:
+  review:
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      ABC_MODE: ${ABC_MODE:-mock}
+      ABC_AGENTS_MODEL: ${ABC_AGENTS_MODEL:-gpt-4.1-mini}
+      ABC_AGENT_TIMEOUT: ${ABC_AGENT_TIMEOUT:-60}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+    volumes:
+      - reviews:/app/data
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+volumes:
+  reviews:

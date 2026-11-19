@@ -1,6 +1,66 @@
 # A–B–C Multi-Agent Review / 三 Agent 充分性·必要性审查 MVP
 
-## 目标与逻辑
+## Web platform
+
+Run an auditable A/B/C assessment for feasibility, investment, purchase necessity,
+competition, procurement or delivery. The console starts in English and offers a
+Simplified Chinese toggle. Model responses use the language selected when the
+assessment is saved.
+
+### Local start
+
+From the repository root, with Python 3.10+ and Node 22+ installed:
+
+```sh
+cd ABC_Agents_MVP
+./scripts/run-local.sh
+```
+
+Open <http://127.0.0.1:8000>. Select **Load demo**, **Save assessment** and **Start
+review**, then open the **Decision report**. The default Mock mode requires no
+key and sends no data to a model. Its demo treats 30% as a target and shows no
+verified baseline or purchase commitment. Use **Export JSON** for the structured
+report and audit trail or **Print / Save PDF** for the ten-section HTML report.
+
+For a real model run, copy `.env.example` to `.env`, set
+`ABC_MODE=openai` and supply `OPENAI_API_KEY` there or in the backend environment.
+Restart the server. Submitted text and evidence are sent to OpenAI when a run
+starts. The key stays in the backend. SDK tracing is disabled.
+
+For a container deployment on your workstation:
+
+```sh
+docker compose up --build
+```
+
+Compose publishes port 8000 on loopback and persists the database in a named
+volume. The bare-process server stores it under `data/reviews.sqlite3` by
+default. Stop either server before starting the other on the same port. For dev
+hot reload, run the API on port 8000 and `npm --prefix frontend run dev`.
+
+### Verify
+
+```sh
+python -m pip install -r requirements-dev.txt
+python -m pytest -q
+npm --prefix frontend ci
+npm --prefix frontend run build
+cd frontend
+npx playwright install chromium
+npm run test:e2e
+```
+
+Run the browser test while the server is available in Mock mode. Set
+`ABC_CHROMIUM` to use an installed Chromium, or `ABC_WEB_URL` for a different
+local port. The browser test creates a record in the selected database. Use a
+temporary database via `ABC_DB` when testing against a running instance.
+
+See [Architecture and access control](ARCHITECTURE.md), [verification results](QA.md)
+and [deployment follow-ups](TODO.md).
+
+## Original CLI / 原始命令行工具
+
+### 目标与逻辑
 
 - A Orchestrator 总调度：整合 B、C 的独立报告，提出建议和补证实验。程序负责确定性调度与规则决策。
 - B Sufficiency 充分性：方案 X 是否足以实现目标 Y？理论形式 `X => Y`。
