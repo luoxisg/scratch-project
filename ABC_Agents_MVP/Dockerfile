@@ -17,9 +17,9 @@ RUN --mount=type=secret,id=proxy_ca \
     && pip install --no-cache-dir -r requirements-web.txt \
     && useradd --uid 10001 --create-home review \
     && mkdir -m 0700 /app/data && chown review:review /app/data
-COPY policy.py ./
-COPY web/ ./web/
-COPY --from=frontend /build/dist ./frontend/dist
+COPY --chown=review:review policy.py ./
+COPY --chown=review:review web/ ./web/
+COPY --from=frontend --chown=review:review /build/dist ./frontend/dist
 USER review
 EXPOSE 8000
 CMD ["uvicorn", "web.api:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000", "--no-access-log"]
